@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sftp-script
+  namespace: sftp-distributor
+  labels:
+    app: sftp-distributor
+data:
+  distribute.sh: |
+    #!/bin/sh
+    for host in $(echo $SFTP_HOSTS | tr ',' '\n'); do
+      echo "Distributing files to $host"
+      sshpass -p "$SFTP_PASS" sftp -o StrictHostKeyChecking=no $SFTP_USER@$host <<EOC
+        put /files/*
+        bye
+EOC
+    done
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sftp-hosts
+  namespace: sftp-distributor
+data:
+  hosts: "server1.example.com,server2.example.com"
