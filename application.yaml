@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/bengkelgawai/gitops'
-    path: gitops/argocd-app/sftp-distributor
+    path: .
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
