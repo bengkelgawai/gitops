@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/bengkelgawai/gitops'
-    path: .
+    path: sftp-distributor-customimage
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
