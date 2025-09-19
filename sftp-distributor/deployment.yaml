@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sftp-distributor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sftp-distributor
+  template:
+    metadata:
+      labels:
+        app: sftp-distributor
+    spec:
+      containers:
+      - name: sftp-distributor
+        image: alpine:latest
+        command: ["/bin/sh", "/scripts/distribute.sh"]
+        volumeMounts:
+        - name: script-volume
+          mountPath: /scripts
+        env:
+        - name: SFTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: sftp-credentials
+              key: username
+        - name: SFTP_PASS
+          valueFrom:
+            secretKeyRef:
+              name: sftp-credentials
+              key: password
+        - name: SFTP_HOSTS
+          valueFrom:
+            configMapKeyRef:
+              name: sftp-hosts
+              key: hosts
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+      volumes:
+      - name: script-volume
+        configMap:
+          name: sftp-script
