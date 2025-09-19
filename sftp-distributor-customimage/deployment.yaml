@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: sftp-distributor
-        image: DOCKERHUB_USERNAME/sftp-distributor:latest
+        image: bengkelgawai/sftp-distributor:latest
         env:
         - name: SFTP_USER
           valueFrom:
