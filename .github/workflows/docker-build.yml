@@ -5,8 +5,8 @@ on:
     branches:
       - master
     paths:
-      - 'Dockerfile'
-      - 'distribute.sh'
+      - 'sftp-distributor-customimage/Dockerfile'
+      - 'sftp-distributor-customimage/distribute.sh'
       - '.github/workflows/docker-build.yml'
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: Dockerfile
+          context: sftp-distributor-customimage
+          file: sftp-distributor-customimage/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/sftp-distributor:latest
